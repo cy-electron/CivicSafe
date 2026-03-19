@@ -261,4 +261,4 @@ This project is currently under development.
 
 # Author
 
-Developed by Ga as a civic technology and data analytics project focused on building a transparent and evidence-driven civic monitoring system.
+Developed by cy-electron as a civic technology and data analytics project focused on building a transparent and evidence-driven civic monitoring system.
