@@ -1,6 +1,6 @@
 # CivicSafe
 
-CivicSafe is an evidence-based civic reporting and analytics platform that enables citizens to report environmental and civic issues with photographic proof and location verification. The platform collects verified civic data and transforms it into meaningful insights for transparency, monitoring, and data-driven governance.
+CivicSafe is a platform for pollution reporting through social media or website with great analytical power, it enables citizens to report environmental and civic issues with photographic proof and location verification on portal or through simple social media post. The platform collects verified civic data and transforms it into meaningful insights for transparency, monitoring, and data-driven governance.
 
 ---
 
