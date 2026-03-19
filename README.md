@@ -1,6 +1,6 @@
 # CivicSafe
 
-CivicSafe is a pollution reporting and analytics platform with social media integration that enables citizens to report environmental and civic issues with photographic proof on portal or through social media. The platform collects verified civic data and transforms it into meaningful insights for transparency, monitoring, and data-driven governance.
+CivicSafe is an evidence-based civic reporting and analytics platform that enables citizens to report environmental and civic issues with photographic proof and location verification. The platform collects verified civic data and transforms it into meaningful insights for transparency, monitoring, and data-driven governance.
 
 ---
 
@@ -8,7 +8,7 @@ CivicSafe is a pollution reporting and analytics platform with social media inte
 
 Most civic complaint systems are slow, opaque, and difficult to use. CivicSafe aims to build a modern, transparent, and data-driven alternative where citizens can easily report issues and communities can monitor civic conditions through analytics and public dashboards.
 
-The long-term goal of CivicSafe is to become a **civic intelligence system** that collects, verifies, and analyzes urban environmental issues.
+The long-term goal of CivicSafe is to become a **civic intelligence system** that collects, verifies, and analyzes urban environmental issues through verified evidence and location-aware reporting.
 
 ---
 
@@ -16,11 +16,33 @@ The long-term goal of CivicSafe is to become a **civic intelligence system** tha
 
 ### Evidence-Based Reporting
 
-Users submit civic issues along with photo evidence. Each report receives a unique case ID for tracking.
+Users submit civic issues along with photo evidence. Each report receives a unique case ID for tracking and verification.
+
+### Location Verification
+
+Reports include location information either by:
+
+* manually entering the location
+* using the **“Use My Location”** feature
+* submitting geo-tagged images captured at the location
+
+This ensures reports are tied to real-world locations.
 
 ### Image Compression and Storage
 
-Uploaded images are automatically compressed in the browser and stored in cloud storage to reduce bandwidth and storage usage.
+Uploaded images are automatically compressed in the browser and stored in cloud storage to reduce bandwidth and storage usage while maintaining sufficient quality for evidence verification.
+
+### Social Media Reporting Integration
+
+CivicSafe will support civic reporting through social media platforms. Users can report issues by:
+
+* posting a **geo-tagged image**
+* tagging the CivicSafe account in a **story or post**
+* including location information with visual evidence
+
+These reports can be detected and converted into structured CivicSafe reports after verification.
+
+Evidence and location are mandatory for social media submissions to prevent misuse and ensure credibility.
 
 ### Public Civic Dashboard
 
@@ -59,6 +81,22 @@ Supabase Database
    ├ Dashboard
    ├ Analytics
    └ Map Visualization
+```
+
+Future extension:
+
+```
+Social Media Post
+   │
+   │ Geo-tagged image + tag
+   ▼
+CivicSafe Social Monitor
+   │
+   ▼
+Verification Pipeline
+   │
+   ▼
+Reports Database
 ```
 
 ---
@@ -156,7 +194,8 @@ civicsafe/
 ## Phase 7 – Social Media Integration
 
 * Detect civic issues from public social media posts
-* Convert posts into structured reports
+* Convert geo-tagged social media posts into CivicSafe reports
+* Evidence and location validation pipeline
 
 ---
 
