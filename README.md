@@ -213,52 +213,27 @@ Run development server
 npm run dev
 ```
 
-Open the application
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```
-http://localhost:3000
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
----
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-# Environment Variables
+## Learn More
 
-Create a `.env.local` file with:
+To learn more about Next.js, take a look at the following resources:
 
-```
-NEXT_PUBLIC_SUPABASE_URL=your_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
----
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-# Contribution
+## Deploy on Vercel
 
-Contributions are welcome. To contribute:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-1. Fork the repository
-2. Create a new feature branch
-3. Make changes
-4. Submit a pull request
-
----
-
-# Future Goals
-
-* Civic issue heat maps
-* Automated social media monitoring
-* AI-assisted issue classification
-* City-level environmental analytics
-* Transparency reports for civic authorities
-
----
-
-# License
-
-This project is currently under development.
-
----
-
-# Author
-
-Developed by cy-electron as a civic technology and data analytics project focused on building a transparent and evidence-driven civic monitoring system.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+=======
+# CivicSafe
+a pollution reporting platform with analytical power and social media reporting.
+>>>>>>> cf946cd4d0bfdaabdcf748da0438479463c69ded

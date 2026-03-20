@@ -2,21 +2,31 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 import { uploadReportImage } from "@/lib/UploadImages";
 
+// CREATE REPORT
 export async function POST(request: Request) {
     try {
 
         const body = await request.json();
 
-        const { title, description, location, category, caseid, image_url } = body;
+        const {
+            title,
+            description,
+            location,
+            category,
+            caseId,
+            image_url
+        } = body;
 
-        if (!title || !description || !location) {
+        // Validation
+        if (!title || !description || !location || !image_url) {
             return NextResponse.json(
-                { success: false, message: "Missing required fields" },
+                {
+                    success: false,
+                    message: "Missing required fields"
+                },
                 { status: 400 }
             );
         }
-
-        const caseId = "CIV-" + Math.floor(100000 + Math.random() * 900000);
 
         const report = {
             case_id: caseId,
@@ -31,29 +41,58 @@ export async function POST(request: Request) {
         const { data, error } = await supabase
             .from("reports")
             .insert([report])
-            .select();
+            .select()
+            .single();
 
         if (error) {
             console.error("Database error:", error);
 
-            return NextResponse.json({
-                success: false,
-                message: "Database error"
-            });
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Failed to create report"
+                },
+                { status: 500 }
+            );
         }
 
         return NextResponse.json({
             success: true,
-            caseId: caseId,
+            message: "Report submitted successfully",
+            caseId: data.case_id,
             report: data
         });
 
     } catch (error) {
+
         console.error("Report API error:", error);
 
+        return NextResponse.json(
+            {
+                success: false,
+                message: "Internal server error"
+            },
+            { status: 500 }
+        );
+    }
+}
+
+export async function GET() {
+
+    const { data, error } = await supabase
+        .from("reports")
+        .select("*")
+        .order("created_at", { ascending: false })
+
+    if (error) {
         return NextResponse.json({
             success: false,
-            message: "Server error"
-        });
+            message: error.message
+        })
     }
+
+    return NextResponse.json({
+        success: true,
+        reports: data
+    })
 }
