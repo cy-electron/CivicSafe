@@ -4,6 +4,8 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import ImageUploader from "../components/ImageUploader";
 import { uploadReportImage } from "@/lib/UploadImages";
+import { Link as LinkIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function ReportPage() {
 
@@ -96,6 +98,18 @@ export default function ReportPage() {
                         Home / Report Issue
                     </div>
 
+                    <div className="mb-8 bg-blue-50 border border-blue-100 rounded-lg py-3 text-center text-sm text-gray-700">
+
+                        Already submitted a report?{" "}
+
+                        <Link
+                            href="/dashboard"
+                            className="text-blue-700 font-semibold hover:underline"
+                        >
+                            Track your case here →
+                        </Link>
+
+                    </div>
                     {/* Card */}
                     <div className="bg-white p-10 rounded-xl shadow-sm border">
 
@@ -204,7 +218,7 @@ export default function ReportPage() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full border rounded-lg px-4 py-3 text-gray-900 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                                className="w-full border rounded-lg px-4 py-3 text-gray-900 font-bold focus:ring-2 focus:ring-blue-700 focus:outline-none"
                             >
                                 {loading ? "Submitting..." : "Submit Report"}
                             </button>
@@ -217,6 +231,6 @@ export default function ReportPage() {
 
             </div>
 
-        </main>
+        </main >
     );
 }

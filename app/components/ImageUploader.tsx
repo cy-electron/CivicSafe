@@ -86,7 +86,7 @@ export default function ImageUploader({ image, setImage }: Props) {
                     Allowed formats: JPG, PNG, WEBP
                 </p>
                 <p className="text-xs text-gray-400 mt-3">
-                    Photo evidence is required to verify civic issues.
+                    Photo evidence is required to verify pollution issues.
                 </p>
 
                 {image && (

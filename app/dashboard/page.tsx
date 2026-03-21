@@ -2,8 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import CategoryChart from "../components/CategoryChart";
 
 export default function Dashboard() {
+
+    // -------------------------------
+    // Dashboard statistics
+    // -------------------------------
 
     const [stats, setStats] = useState({
         total: 0,
@@ -12,31 +17,62 @@ export default function Dashboard() {
     });
 
     const [loading, setLoading] = useState(true);
+
+    // -------------------------------
+    // Category chart data
+    // -------------------------------
+
+    const [categoryData, setCategoryData] = useState<any[]>([]);
+
+    // -------------------------------
+    // Case tracking
+    // -------------------------------
+
     const [caseId, setCaseId] = useState("");
     const [reportStatus, setReportStatus] = useState<any>(null);
     const [error, setError] = useState("");
 
+    // -------------------------------
+    // Load dashboard data
+    // -------------------------------
+
     useEffect(() => {
 
-        const loadStats = async () => {
-            try {
-                const res = await fetch("/api/report/stats");
-                const data = await res.json();
+        const loadDashboardData = async () => {
 
-                if (data.success) {
-                    setStats(data.stats);
+            try {
+
+                // Load stats
+                const statsRes = await fetch("/api/report/stats");
+                const statsData = await statsRes.json();
+
+                if (statsData.success) {
+                    setStats(statsData.stats);
+                }
+
+                // Load category distribution
+                const catRes = await fetch("/api/report/categories");
+                const catData = await catRes.json();
+
+                if (catData.success) {
+                    setCategoryData(catData.categories);
                 }
 
             } catch (err) {
-                console.error("Failed to load stats", err);
+                console.error("Dashboard load error:", err);
             }
 
             setLoading(false);
+
         };
 
-        loadStats();
+        loadDashboardData();
 
     }, []);
+
+    // -------------------------------
+    // Case ID status lookup
+    // -------------------------------
 
     const handleCheckStatus = async () => {
 
@@ -67,7 +103,7 @@ export default function Dashboard() {
             }
 
         } catch (err) {
-            console.error(err);
+            console.error("Case lookup error:", err);
             setError("Something went wrong.");
         }
     };
@@ -81,7 +117,7 @@ export default function Dashboard() {
 
                 <div className="max-w-6xl mx-auto">
 
-                    {/* Title */}
+                    {/* Page Title */}
                     <h1 className="text-3xl font-bold text-gray-900 mb-10">
                         CivicSafe Dashboard
                     </h1>
@@ -121,10 +157,11 @@ export default function Dashboard() {
 
                     </div>
 
+
                     {/* Case Tracking */}
                     <div className="mt-16 bg-white border rounded-xl p-8 shadow-sm">
 
-                        <h2 className="text-gray-700 font-semibold mb-4">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
                             Track Your Report
                         </h2>
 
@@ -132,7 +169,7 @@ export default function Dashboard() {
                             Enter your Case ID to check the verification or resolution status.
                         </p>
 
-                        <div className="text-gray-800 flex flex-col md:flex-row gap-4">
+                        <div className="text-gray-700 flex flex-col md:flex-row gap-4">
 
                             <input
                                 type="text"
@@ -157,9 +194,8 @@ export default function Dashboard() {
                             </p>
                         )}
 
-                        {/* Report Result */}
                         {reportStatus && (
-                            <div className="text-gray-700 mt-6 border-t pt-6">
+                            <div className="mt-6 border-t pt-6 text-gray-700 space-y-1">
 
                                 <p><strong>Title:</strong> {reportStatus.title}</p>
                                 <p><strong>Location:</strong> {reportStatus.location}</p>
@@ -169,6 +205,10 @@ export default function Dashboard() {
                             </div>
                         )}
 
+                    </div>
+                    {/* Category Chart */}
+                    <div className="mt-12">
+                        <CategoryChart data={categoryData} />
                     </div>
 
                 </div>
