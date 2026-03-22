@@ -24,7 +24,7 @@ export default function Home() {
 
       {/* Chart Section */}
       <section className="max-w-7xl mx-auto px-6 mt-16 mb-20">
-        <TrendChart />
+        <TrendChart data={[]} />
       </section>
 
       <section className="max-w-7xl mx-auto px-6">

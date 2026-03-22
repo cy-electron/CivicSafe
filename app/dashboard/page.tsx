@@ -3,6 +3,13 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import CategoryChart from "../components/CategoryChart";
+import TrendChart from "../components/TrendChart";
+import dynamic from "next/dynamic";
+
+const PollutionHeatMap = dynamic(
+    () => import("../components/PollutionHeatMap"),
+    { ssr: false }
+);
 
 export default function Dashboard() {
 
@@ -13,14 +20,21 @@ export default function Dashboard() {
     const [stats, setStats] = useState({
         total: 0,
         verification: 0,
+        progress: 0,
         resolved: 0
     });
 
+    const [mapReports, setMapReports] = useState([]);
+    // heat map
     const [loading, setLoading] = useState(true);
 
     // -------------------------------
     // Category chart data
     // -------------------------------
+
+    const [trendData, setTrendData] = useState<any[]>([]);
+    //--------------------------------
+    //trend chart
 
     const [categoryData, setCategoryData] = useState<any[]>([]);
 
@@ -58,6 +72,22 @@ export default function Dashboard() {
                     setCategoryData(catData.categories);
                 }
 
+                // Load Heatmap data
+                const mapRes = await fetch("/api/report/map");
+                const mapData = await mapRes.json();
+
+                if (mapData.success) {
+                    setMapReports(mapData.reports);
+                }
+
+                // Load trend data
+                const trendRes = await fetch("/api/report/trends");
+                const trendData = await trendRes.json();
+
+                if (trendData.success) {
+                    setTrendData(trendData.trends);
+                }
+
             } catch (err) {
                 console.error("Dashboard load error:", err);
             }
@@ -69,7 +99,6 @@ export default function Dashboard() {
         loadDashboardData();
 
     }, []);
-
     // -------------------------------
     // Case ID status lookup
     // -------------------------------
@@ -93,6 +122,12 @@ export default function Dashboard() {
                 body: JSON.stringify({ caseId })
             });
 
+            //const data = await res.json();
+            if (!res.ok) {
+                console.error("API failed", res.status);
+                return;
+            }
+
             const data = await res.json();
 
             if (data.success) {
@@ -106,6 +141,7 @@ export default function Dashboard() {
             console.error("Case lookup error:", err);
             setError("Something went wrong.");
         }
+
     };
 
     return (
@@ -123,7 +159,7 @@ export default function Dashboard() {
                     </h1>
 
                     {/* Stats Cards */}
-                    <div className="grid md:grid-cols-3 gap-6">
+                    <div className="grid md:grid-cols-4 gap-6">
 
                         <div className="bg-white border rounded-xl p-6 shadow-sm">
                             <p className="text-sm text-gray-500">
@@ -140,8 +176,19 @@ export default function Dashboard() {
                                 Under Verification
                             </p>
 
+
                             <p className="text-3xl font-bold text-yellow-800 mt-2">
                                 {loading ? "..." : stats.verification}
+                            </p>
+                        </div>
+
+                        <div className="bg-blue-50 border rounded-x1 p-6 shadow-sm">
+                            <p className="text-sm text-blue-700">
+                                In Progress
+                            </p>
+
+                            <p className="text-3xl font-bold text-gray-700 mt-2">
+                                {loading ? "..." : stats.progress}
                             </p>
                         </div>
 
@@ -210,7 +257,14 @@ export default function Dashboard() {
                     <div className="mt-12">
                         <CategoryChart data={categoryData} />
                     </div>
-
+                    {/*Trend Chart */}
+                    <div className="mt-12">
+                        <TrendChart data={trendData} />
+                    </div>
+                    {/*HeatMAp */}
+                    <div className="mt=12">
+                        <PollutionHeatMap reports={mapReports} />
+                    </div>
                 </div>
 
             </div>
